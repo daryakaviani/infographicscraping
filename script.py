@@ -6,12 +6,18 @@ import json
 def stats(path, movement):
     years = ["2014", "2015", "2016", "2017", "2018", "2019", "2020"]
     action_words = ["petition", "call", "vote", "march", "rise", "text", "action", "act", "demand", "fight", "protest", "share", "come", "support", "help", "urge", "sign", "prosecute", "donate", "defend", "change", "command", "shout", "cry", "react", "now", "justice"]
-    num_images_with_text = num_characters = num_images = num_action_words = num_total_comments = num_infographic_comments = num_total_likes = num_infographic_likes = {"2014": 0, "2015": 0, "2016": 0, "2017": 0, "2018": 0, "2019": 0, "2020": 0}
+    num_images_with_text = {"2014": 0, "2015": 0, "2016": 0, "2017": 0, "2018": 0, "2019": 0, "2020": 0}
+    num_characters = {"2014": 0, "2015": 0, "2016": 0, "2017": 0, "2018": 0, "2019": 0, "2020": 0}
+    num_images = {"2014": 0, "2015": 0, "2016": 0, "2017": 0, "2018": 0, "2019": 0, "2020": 0}
+    num_action_words = {"2014": 0, "2015": 0, "2016": 0, "2017": 0, "2018": 0, "2019": 0, "2020": 0}
+    num_total_comments = {"2014": 0, "2015": 0, "2016": 0, "2017": 0, "2018": 0, "2019": 0, "2020": 0}
+    num_infographic_comments = {"2014": 0, "2015": 0, "2016": 0, "2017": 0, "2018": 0, "2019": 0, "2020": 0}
+    num_total_likes = {"2014": 0, "2015": 0, "2016": 0, "2017": 0, "2018": 0, "2019": 0, "2020": 0}
+    num_infographic_likes = {"2014": 0, "2015": 0, "2016": 0, "2017": 0, "2018": 0, "2019": 0, "2020": 0}
 
     for filename in os.listdir(path):
         if filename.endswith(".jpg"):
             # Get the image
-            print(filename)
             new_path = os.path.join(path, filename)
             img = cv2.imread(new_path)
             img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -43,8 +49,6 @@ def stats(path, movement):
                 if filename.startswith(year):
                     # Remove spaces and newlines
                     lowercase_text_no_space = lowercase_text.replace(" ", "").replace("\n", "")
-                    print(len(lowercase_text_no_space))
-                    print(lowercase_text_no_space)
 
                     # If we detect sufficient text (15 characters is the average of 3 words), we classify it as an infographic
                     if len(lowercase_text_no_space) > 15:
@@ -64,9 +68,10 @@ def stats(path, movement):
                     num_total_likes[year] += post_likes;
 
                     # Add number of action words to action words
+                    image_action_words = 0
                     for word in action_words:
-                        if word in lowercase_text_no_space:
-                            num_action_words[year] += 1
+                        image_action_words += lowercase_text_no_space.count(word)
+                    num_action_words[year] += image_action_words
 
     print("Stats for: " + movement +":")
     overall_num_total_likes = overall_num_total_comments = overall_num_infographic_likes = overall_num_infographic_comments = overall_num_images_with_text = overall_num_images = 0
