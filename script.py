@@ -85,6 +85,8 @@ def stats(path, movement):
         print("The number of action words in " + year + " is: " + str(num_action_words[year]))
         print("The percentage of likes that belonged to infographics in " + year + " is: " + str(100 * num_infographic_likes[year]/num_total_likes[year]))
         print("The percentage of comments that belonged to infographics in " + year + " is: " + str(100 * num_infographic_comments[year]/num_total_comments[year]))
+        print("The number of likes that belonged to infographics in " + year + " is: " + str(num_infographic_likes[year]))
+        print("The number of comments that belonged to infographics in " + year + " is: " + str(num_infographic_comments[year]))
         
         # Calculate overall statistics across years
         overall_num_total_likes += num_total_likes[year]
